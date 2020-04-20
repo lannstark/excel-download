@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d4baa9bc-c7e9-478c-8fb3-f56ac2c1dee0" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ProjectId" id="1anRgVINiOqlJOrNOfbtP6Dc1Hi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/lannstark" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.annotationProcessors" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/com/lannstark" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d4baa9bc-c7e9-478c-8fb3-f56ac2c1dee0" name="Default Changelist" comment="" />
+      <created>1587369482920</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1587369482920</updated>
+      <workItem from="1587369484233" duration="893000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="3173" y="664" key="#com.intellij.ide.util.MemberChooser" timestamp="1587370329831">
+      <screen x="1680" y="23" width="3360" height="1867" />
+    </state>
+    <state x="3173" y="664" key="#com.intellij.ide.util.MemberChooser/1680.23.3360.1867/0.23.1680.982@1680.23.3360.1867" timestamp="1587370329831" />
+    <state x="3025" y="607" width="670" height="676" key="search.everywhere.popup" timestamp="1587369745376">
+      <screen x="1680" y="23" width="3360" height="1867" />
+    </state>
+    <state x="3025" y="607" width="670" height="676" key="search.everywhere.popup/1680.23.3360.1867/0.23.1680.982@1680.23.3360.1867" timestamp="1587369745376" />
+  </component>
+</project>

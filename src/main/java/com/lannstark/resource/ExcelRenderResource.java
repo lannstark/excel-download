@@ -29,14 +29,6 @@ public class ExcelRenderResource {
 		return excelHeaderNames.get(dataFieldName);
 	}
 
-	public PreCalculatedCellStyleMap getStyleMap() {
-		return styleMap;
-	}
-
-	public Map<String, String> getExcelHeaderNames() {
-		return excelHeaderNames;
-	}
-
 	public List<String> getDataFieldNames() {
 		return dataFieldNames;
 	}

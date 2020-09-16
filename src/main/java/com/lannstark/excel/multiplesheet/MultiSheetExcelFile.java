@@ -12,13 +12,19 @@ import java.util.List;
  * - support Excel Version over 2007
  * - support multi sheet rendering
  * - support Dffierent DataFormat by Class Type
- * - support Custom CellStyle according to (header or contents) and data field
+ * - support Custom CellStyle according to (header or body) and data field
  */
 public class MultiSheetExcelFile<T> extends SXSSFExcelFile<T> {
 
 	private static final int maxRowCanBeRendered = supplyExcelVersion.getMaxRows() - 1;
 	private static final int ROW_START_INDEX = 0;
 	private static final int COLUMN_START_INDEX = 0;
+	private int currentRowIndex = ROW_START_INDEX;
+
+	public MultiSheetExcelFile(Class<T> type) {
+		super(type);
+		wb.setZip64Mode(Zip64Mode.Always);
+	}
 
 	/*
 	 * If you use SXSSF with hug data, you need to set zip mode
@@ -42,16 +48,17 @@ public class MultiSheetExcelFile<T> extends SXSSFExcelFile<T> {
 			return ;
 		}
 
+		// 2. Render body
 		createNewSheetWithHeader();
-		int renderedDataCnt = 0;
-		int rowIndex = ROW_START_INDEX + 1;
-		for (Object renderedData : data) {
-			renderContent(renderedData, rowIndex++, COLUMN_START_INDEX);
-			renderedDataCnt ++;
+		addRows(data);
+	}
 
-			if (renderedDataCnt == maxRowCanBeRendered) {
-				renderedDataCnt = 0;
-				rowIndex = 1;
+	@Override
+	public void addRows(List<T> data) {
+		for (Object renderedData : data) {
+			renderBody(renderedData, currentRowIndex++, COLUMN_START_INDEX);
+			if (currentRowIndex == maxRowCanBeRendered) {
+				currentRowIndex = 1;
 				createNewSheetWithHeader();
 			}
 		}
@@ -60,6 +67,7 @@ public class MultiSheetExcelFile<T> extends SXSSFExcelFile<T> {
 	private void createNewSheetWithHeader() {
 		sheet = wb.createSheet();
 		renderHeadersWithNewSheet(sheet, ROW_START_INDEX, COLUMN_START_INDEX);
+		currentRowIndex++;
 	}
 
 }

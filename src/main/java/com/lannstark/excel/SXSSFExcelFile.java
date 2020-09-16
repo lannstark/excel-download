@@ -15,11 +15,12 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.List;
 
 import static com.lannstark.utils.SuperClassReflectionUtils.getField;
 
-public abstract class SXSSFExcelFile<T> implements ExcelFile {
+public abstract class SXSSFExcelFile<T> implements ExcelFile<T> {
 
 	protected static final SpreadsheetVersion supplyExcelVersion = SpreadsheetVersion.EXCEL2007;
 
@@ -28,27 +29,36 @@ public abstract class SXSSFExcelFile<T> implements ExcelFile {
 	protected ExcelRenderResource resource;
 
 	/**
-	 * OneSheetExcelFile
+	 *SXSSFExcelFile
+	 * @param type Class type to be rendered
+	 */
+	public SXSSFExcelFile(Class<T> type) {
+		this(Collections.emptyList(), type, new DefaultDataFormatDecider());
+	}
+
+	/**
+	 * SXSSFExcelFile
 	 * @param data List Data to render excel file. data should have at least one @ExcelColumn on fields
 	 * @param type Class type to be rendered
 	 */
 	public SXSSFExcelFile(List<T> data, Class<T> type) {
-		this.wb = new SXSSFWorkbook();
-		this.resource = ExcelRenderResourceFactory.prepareRenderResource(type, wb, new DefaultDataFormatDecider());
-		renderExcel(data);
+		this(data, type, new DefaultDataFormatDecider());
 	}
 
 	/**
-	 * OneSheetExcelFile
+	 * SXSSFExcelFile
 	 * @param data List Data to render excel file. data should have at least one @ExcelColumn on fields
 	 * @param type Class type to be rendered
 	 * @param dataFormatDecider Custom DataFormatDecider
 	 */
 	public SXSSFExcelFile(List<T> data, Class<T> type, DataFormatDecider dataFormatDecider) {
+		validateData(data);
 		this.wb = new SXSSFWorkbook();
 		this.resource = ExcelRenderResourceFactory.prepareRenderResource(type, wb, dataFormatDecider);
 		renderExcel(data);
 	}
+
+	protected void validateData(List<T> data) { }
 
 	protected abstract void renderExcel(List<T> data);
 
@@ -62,7 +72,7 @@ public abstract class SXSSFExcelFile<T> implements ExcelFile {
 		}
 	}
 
-	protected void renderContent(Object data, int rowIndex, int columnStartIndex) {
+	protected void renderBody(Object data, int rowIndex, int columnStartIndex) {
 		Row row = sheet.createRow(rowIndex);
 		int columnIndex = columnStartIndex;
 		for (String dataFieldName : resource.getDataFieldNames()) {
@@ -70,7 +80,7 @@ public abstract class SXSSFExcelFile<T> implements ExcelFile {
 			try {
 				Field field = getField(data.getClass(), (dataFieldName));
 				field.setAccessible(true);
-				cell.setCellStyle(resource.getCellStyle(dataFieldName, ExcelRenderLocation.CONTENTS));
+				cell.setCellStyle(resource.getCellStyle(dataFieldName, ExcelRenderLocation.BODY));
 				Object cellValue = field.get(data);
 				renderCellValue(cell, cellValue);
 			} catch (Exception e) {

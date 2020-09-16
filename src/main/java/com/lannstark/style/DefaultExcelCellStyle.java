@@ -17,7 +17,7 @@ public enum DefaultExcelCellStyle implements ExcelCellStyle {
 			DefaultExcelBorders.newInstance(ExcelBorderStyle.THIN), DefaultExcelAlign.CENTER_CENTER),
 	BLUE_HEADER(DefaultExcelColor.rgb(223, 235, 246),
 			DefaultExcelBorders.newInstance(ExcelBorderStyle.THIN), DefaultExcelAlign.CENTER_CENTER),
-	CONTENTS(DefaultExcelColor.rgb(255, 255, 255),
+	BODY(DefaultExcelColor.rgb(255, 255, 255),
 			DefaultExcelBorders.newInstance(ExcelBorderStyle.THIN), DefaultExcelAlign.RIGHT_CENTER);
 
 	private final ExcelColor backgroundColor;

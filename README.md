@@ -36,7 +36,7 @@ dependencies {
 // Rendered Field Order is same as Dto field order
 public class ExcelDto {
 
-  // Annotation Case 1. no headerStyle and contentsStyle
+  // Annotation Case 1. no headerStyle and bodyStyle
   @ExcelColumn(headerName = "User Name")
   private String name;
   
@@ -46,24 +46,24 @@ public class ExcelDto {
   )
   private int age;
   
-  // Annotation Case 3. You can also configure contents style
+  // Annotation Case 3. You can also configure bodyStyle style
   @ExcelColumn(headerName = "Happy BirthDay",
-      contentsStyle = @ExcelColumnStyle(excelCellStyleClass = DefaultExcelCellStyle.class, enumName = "CONTENTS")
+      bodyStyle = @ExcelColumnStyle(excelCellStyleClass = DefaultExcelCellStyle.class, enumName = "BODY")
   )
   private LocalDate birthDay;
 
 }
 ```
 
-If you want to config default style in class, you should use @DefaultHeaderStyle or @DefaultContentsStyle.
+If you want to config default style in class, you should use @DefaultHeaderStyle or @DefaultBodyStyle.
 This style will be applied to all fields having not field style in this class.
 
 ```java
 @DefaultHeaderStyle(
     style = @ExcelColumnStyle(excelCellStyleClass = DefaultExcelCellStyle.class, enumName = "BLUE_HEADER")
 )
-@DefaultContentsStyle(
-	style = @ExcelColumnStyle(excelCellStyleClass = DefaultExcelCellStyle.class, enumName = "CONTENTS")
+@DefaultBodyStyle(
+	style = @ExcelColumnStyle(excelCellStyleClass = DefaultExcelCellStyle.class, enumName = "BODY")
 )
 public class ExcelDto {
 	
@@ -192,7 +192,7 @@ public enum CustomCellStyle implements ExcelCellStyle {
 public class ExcelDto {
 
   @ExcelColumn(headerName = "Field Header Title",
-      contentsStyle = @ExcelColumnStyle(excelCellStyleClass = CustomCellStyle.class, enumName = "CUSTOM_HEADER")
+      bodyStyle = @ExcelColumnStyle(excelCellStyleClass = CustomCellStyle.class, enumName = "CUSTOM_HEADER")
   )
   private String field1;
 

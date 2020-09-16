@@ -14,15 +14,15 @@ import java.util.Map;
  * PreCalculatedCellStyleMap
  *
  * Determines cell's style
- * In currently, PreCalculatedCellSylteMap determines {org.apache.poi.ss.usermodel.DataFormat}
+ * In currently, PreCalculatedCellStyleMap determines {org.apache.poi.ss.usermodel.DataFormat}
  *
  */
 public class PreCalculatedCellStyleMap {
 
-	private final DataFormatDecider store;
+	private final DataFormatDecider dataFormatDecider;
 
-	public PreCalculatedCellStyleMap(DataFormatDecider store) {
-		this.store = store;
+	public PreCalculatedCellStyleMap(DataFormatDecider dataFormatDecider) {
+		this.dataFormatDecider = dataFormatDecider;
 	}
 
 	private final Map<ExcelCellKey, CellStyle> cellStyleMap = new HashMap<>();
@@ -30,7 +30,7 @@ public class PreCalculatedCellStyleMap {
 	public void put(Class<?> fieldType, ExcelCellKey excelCellKey, ExcelCellStyle excelCellStyle, Workbook wb) {
 		CellStyle cellStyle = wb.createCellStyle();
 		DataFormat dataFormat = wb.createDataFormat();
-		cellStyle.setDataFormat(store.getDataFormat(dataFormat, fieldType));
+		cellStyle.setDataFormat(dataFormatDecider.getDataFormat(dataFormat, fieldType));
 		excelCellStyle.apply(cellStyle);
 		cellStyleMap.put(excelCellKey, cellStyle);
 	}

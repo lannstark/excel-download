@@ -1,6 +1,6 @@
 package com.lannstark.resource;
 
-import com.lannstark.DefaultContentsStyle;
+import com.lannstark.DefaultBodyStyle;
 import com.lannstark.DefaultHeaderStyle;
 import com.lannstark.ExcelColumn;
 import com.lannstark.ExcelColumnStyle;
@@ -34,7 +34,7 @@ public final class ExcelRenderResourceFactory {
 		List<String> fieldNames = new ArrayList<>();
 
 		ExcelColumnStyle classDefinedHeaderStyle = getHeaderExcelColumnStyle(type);
-		ExcelColumnStyle classDefinedContentsStyle = getContentsExcelColumnStyle(type);
+		ExcelColumnStyle classDefinedBodyStyle = getBodyExcelColumnStyle(type);
 
 		for (Field field : getAllFields(type)) {
 			if (field.isAnnotationPresent(ExcelColumn.class)) {
@@ -46,8 +46,8 @@ public final class ExcelRenderResourceFactory {
 				Class<?> fieldType = field.getType();
 				styleMap.put(
 						fieldType,
-						ExcelCellKey.of(field.getName(), ExcelRenderLocation.CONTENTS),
-						getCellStyle(decideAppliedStyleAnnotation(classDefinedContentsStyle, annotation.contentsStyle())), wb);
+						ExcelCellKey.of(field.getName(), ExcelRenderLocation.BODY),
+						getCellStyle(decideAppliedStyleAnnotation(classDefinedBodyStyle, annotation.bodyStyle())), wb);
 				fieldNames.add(field.getName());
 				headerNamesMap.put(field.getName(), annotation.headerName());
 			}
@@ -67,12 +67,12 @@ public final class ExcelRenderResourceFactory {
 		return ((DefaultHeaderStyle) annotation).style();
 	}
 
-	private static ExcelColumnStyle getContentsExcelColumnStyle(Class<?> clazz) {
-		Annotation annotation = getAnnotation(clazz, DefaultContentsStyle.class);
+	private static ExcelColumnStyle getBodyExcelColumnStyle(Class<?> clazz) {
+		Annotation annotation = getAnnotation(clazz, DefaultBodyStyle.class);
 		if (annotation == null) {
 			return null;
 		}
-		return ((DefaultContentsStyle) annotation).style();
+		return ((DefaultBodyStyle) annotation).style();
 	}
 
 	private static ExcelColumnStyle decideAppliedStyleAnnotation(ExcelColumnStyle classAnnotation,
@@ -100,7 +100,7 @@ public final class ExcelRenderResourceFactory {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static ExcelCellStyle findExcelCellStyle(Class excelCellStyles, String enumName) {
+	private static ExcelCellStyle findExcelCellStyle(Class<?> excelCellStyles, String enumName) {
 		try {
 			return (ExcelCellStyle) Enum.valueOf((Class<Enum>) excelCellStyles, enumName);
 		} catch (NullPointerException e) {

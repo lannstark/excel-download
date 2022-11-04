@@ -8,7 +8,7 @@ import com.lannstark.style.BlackHeaderStyle;
 import com.lannstark.style.BlueHeaderStyle;
 import com.lannstark.type.Job;
 
-@CellDropdown(colIndex = 2, type = Job.class)
+@CellDropdown(colIndex = 2, type = Job.class, qualifiedByName = "getDescription")
 @DefaultHeaderStyle(style = @ExcelColumnStyle(excelCellStyleClass = BlueHeaderStyle.class))
 public class ExcelWithDropdownDto {
 

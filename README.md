@@ -199,6 +199,22 @@ public class ExcelDto {
 }
 ```
 
+If you want you Data Validation in Excel, You Can Use @CellDropdown Annotation Class Level.   
+Also, You can Use several Annotations.
+(e.g. ExcelWithDropdownDto)
+```java
+@CellDropdown(colIndex = 0, type = Job.class)
+public class ExcelWithDropdownDto {
+
+	@ExcelColumn(headerName = "job")
+	private String job;
+	
+}
+```
+colIndex : number of Column index (start from 0) **required**  
+type : selectable values **required**
+
+
 ## Kinds of Excel File
 
 - OneSheetExcelFile

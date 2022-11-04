@@ -6,10 +6,16 @@ import com.lannstark.resource.DefaultDataFormatDecider;
 import com.lannstark.resource.ExcelRenderLocation;
 import com.lannstark.resource.ExcelRenderResource;
 import com.lannstark.resource.ExcelRenderResourceFactory;
+import com.lannstark.utils.DropdownOption;
+import java.util.Map;
 import org.apache.poi.ss.SpreadsheetVersion;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataValidation;
+import org.apache.poi.ss.usermodel.DataValidationConstraint;
+import org.apache.poi.ss.usermodel.DataValidationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 import java.io.IOException;
@@ -61,6 +67,33 @@ public abstract class SXSSFExcelFile<T> implements ExcelFile<T> {
 	protected void validateData(List<T> data) { }
 
 	protected abstract void renderExcel(List<T> data);
+
+	/**
+	 *
+	 * @param rowIndex startRow
+	 * @param dataSize total data size
+	 */
+	protected void generateDropdown(final int rowIndex, final int dataSize) {
+		final Map<Integer, DropdownOption> dropdownMap = resource.getDropdownMap();
+		for (Integer colIndex : dropdownMap.keySet()) {
+			final DropdownOption dropdownOption = dropdownMap.get(colIndex);
+			final List<String> options = dropdownOption.getOptionNames();
+
+			final CellRangeAddressList cellRangeAddressList = new CellRangeAddressList();
+			cellRangeAddressList.addCellRangeAddress(rowIndex, colIndex, rowIndex + dataSize, colIndex);
+
+			final DataValidationHelper dataValidationHelper = sheet.getDataValidationHelper();
+			final DataValidationConstraint explicitListConstraint =
+					dataValidationHelper.createExplicitListConstraint(options.toArray(new String[options.size()]));
+			final DataValidation validation = dataValidationHelper.createValidation(explicitListConstraint, cellRangeAddressList);
+			validation.setEmptyCellAllowed(dropdownOption.isEmptyCellAllowed());
+			validation.setShowErrorBox(dropdownOption.isShowErrorBox());
+			validation.setShowPromptBox(dropdownOption.isShowPromptBox());
+			validation.setErrorStyle(dropdownOption.getErrorStyle());
+			validation.createErrorBox("Error!", dropdownOption.getErrorMessage());
+			sheet.addValidationData(validation);
+		}
+	}
 
 	protected void renderHeadersWithNewSheet(Sheet sheet, int rowIndex, int columnStartIndex) {
 		Row row = sheet.createRow(rowIndex);

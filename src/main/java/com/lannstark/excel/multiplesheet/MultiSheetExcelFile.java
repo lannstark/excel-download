@@ -48,7 +48,10 @@ public class MultiSheetExcelFile<T> extends SXSSFExcelFile<T> {
 			return ;
 		}
 
-		// 2. Render body
+		// 2. generate Dropdown (be called Data Validation in Excel)
+		generateDropdown(ROW_START_INDEX, data.size());
+
+		// 3. Render body
 		createNewSheetWithHeader();
 		addRows(data);
 	}

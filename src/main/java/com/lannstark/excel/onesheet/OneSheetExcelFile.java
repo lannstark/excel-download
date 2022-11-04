@@ -45,6 +45,7 @@ public final class OneSheetExcelFile<T> extends SXSSFExcelFile<T> {
 		// 1. Create sheet and renderHeader
 		sheet = wb.createSheet();
 		renderHeadersWithNewSheet(sheet, currentRowIndex++, COLUMN_START_INDEX);
+		generateDropdown(ROW_START_INDEX, data.size());
 
 		if (data.isEmpty()) {
 			return;

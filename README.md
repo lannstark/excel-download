@@ -25,7 +25,7 @@ allprojects {
 
 // Use proper version
 dependencies {
-  implementation('com.github.lannstark:excel-download:0.1.1')
+  implementation('com.github.lannstark:excel-download:0.1.5')
 }
 ```
 
